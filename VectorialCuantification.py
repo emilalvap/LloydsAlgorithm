@@ -1,6 +1,9 @@
 import numpy
 
-
+'''Container class for Lloyds algorithm:
+ -> N equals de dimension of vectors to process
+ -> maxK is the number of max iterations to calculate
+ '''
 
 class VectorialCuantification():
 
@@ -8,6 +11,7 @@ class VectorialCuantification():
 
 		self.N = N
 		self.centers = []
+		self.centersNames = []
 		self.trainingVectors = []
 		self.maxK = maxK
 		self.gammaK = None
@@ -19,17 +23,18 @@ class VectorialCuantification():
 	def setGammaK(self,floatGamma):
 		self.gammaK = floatGamma
 
-	def addInitialCenter(self,cVector):
+	def addInitialCenter(self,cVector,cName):
 
 		self.centers.append(cVector)
+		self.centersNames.append(cName)
 
 	def addTrainingVector(self,tVector):
 
 		self.trainingVectors.append(tVector)
 
 	def trainCenter(self,xVector):
+
 		updateIndex = self.nearestCenter(xVector)
-		print "centro elegido: ", updateIndex
 		self.updateCenter(updateIndex,xVector)
 
 	def nearestCenter(self,xVector):
@@ -38,7 +43,6 @@ class VectorialCuantification():
 		index = None
 		for i in range(len(self.centers)): 
 			dist = numpy.linalg.norm(numpy.subtract(xVector,self.centers[i]))
-			print "distancia al centro ", i ," igual a ",dist
 			if(dist < mini):
 				mini = dist
 				index = i
@@ -51,7 +55,7 @@ class VectorialCuantification():
 
 	def clasify(self,xVector):
 
-		return nearestCenter(xVector)
+		return self.centersNames[self.nearestCenter(xVector)]
 
 	def generateTraining(self):
 
@@ -66,10 +70,10 @@ class VectorialCuantification():
 '''Ejemplo diapositiva 19 '''
 lloyd = VectorialCuantification(2,2)
 lloyd.setGammaK(0.1)
-#centros
-lloyd.addInitialCenter([1,4])
-lloyd.addInitialCenter([7,2])
-#vectores de entrenamiento
+#centers
+lloyd.addInitialCenter([1,4],"Clase 1")
+lloyd.addInitialCenter([7,2],"Clase 2")
+#training vectors
 lloyd.addTrainingVector([1,1])
 lloyd.addTrainingVector([1,3])
 lloyd.addTrainingVector([1,5])
@@ -80,5 +84,8 @@ lloyd.addTrainingVector([6,4])
 lloyd.addTrainingVector([7,1])
 lloyd.addTrainingVector([7,3])
 lloyd.addTrainingVector([7,5])
+#value generation
 lloyd.generateTraining()
-print lloyd.getCenters()
+print "Ejemplo diapositiva 19:"
+print ">>>> Test de valores"
+print "[6,2] pertenece a ",lloyd.clasify([6,2])
