@@ -7,7 +7,7 @@ import numpy
 
 class VectorialCuantification():
 
-	def __init__(self,N,maxK):
+	def __init__(self,N,maxK,tolerance):
 
 		self.N = N
 		self.centers = []
@@ -15,6 +15,7 @@ class VectorialCuantification():
 		self.trainingVectors = []
 		self.maxK = maxK
 		self.gammaK = None
+		self.tolerance = tolerance
 
 	def getGammaK(self):
 	
@@ -35,7 +36,7 @@ class VectorialCuantification():
 	def trainCenter(self,xVector):
 
 		updateIndex = self.nearestCenter(xVector)
-		self.updateCenter(updateIndex,xVector)
+		return self.updateCenter(updateIndex,xVector)
 
 	def nearestCenter(self,xVector):
 
@@ -50,8 +51,9 @@ class VectorialCuantification():
 
 	def updateCenter(self,index,xVector):
 
+		tolerance = numpy.linalg.norm(numpy.subtract(self.centers[index],xVector))
 		self.centers[index] = numpy.add(self.centers[index],(numpy.dot(self.gammaK,numpy.subtract(xVector,self.centers[index]))))
-		
+		return tolerance
 
 	def clasify(self,xVector):
 
@@ -59,16 +61,28 @@ class VectorialCuantification():
 
 	def generateTraining(self):
 
+		toleranceBreak = False
+
 		for k in range(self.maxK):
 			for tVector in self.trainingVectors:
-				self.trainCenter(tVector)
+				tolerance = self.trainCenter(tVector)
+				
+				if(tolerance < self.tolerance):
+					toleranceBreak = True
+					break
+			if(toleranceBreak==True):
+				break
+
+		if(toleranceBreak==True):
+			print "Iteraciones rotas por limite de tolerancia"
 
 	def getCenters(self):
 
 		return self.centers
 
 '''Ejemplo diapositiva 19 '''
-lloyd = VectorialCuantification(2,2)
+toleranceLimit = numpy.power(10,-10)
+lloyd = VectorialCuantification(2,20000000,toleranceLimit)
 lloyd.setGammaK(0.1)
 #centers
 lloyd.addInitialCenter([1,4],"Clase 1")
