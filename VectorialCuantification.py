@@ -79,29 +79,29 @@ class VectorialCuantification():
 	def getCenters(self):
 
 		return self.centers
-
-'''Ejemplo diapositiva 19 '''
-toleranceLimit = numpy.power(10,-10)
-lloyd = VectorialCuantification(2,2,toleranceLimit)
-lloyd.setGammaK(0.1)
-#centers
-lloyd.addInitialCenter([1,4],"Clase 1")
-lloyd.addInitialCenter([7,2],"Clase 2")
-#training vectors
-lloyd.addTrainingVector([1,1])
-lloyd.addTrainingVector([1,3])
-lloyd.addTrainingVector([1,5])
-lloyd.addTrainingVector([2,2])
-lloyd.addTrainingVector([2,3])
-lloyd.addTrainingVector([6,3])
-lloyd.addTrainingVector([6,4])
-lloyd.addTrainingVector([7,1])
-lloyd.addTrainingVector([7,3])
-lloyd.addTrainingVector([7,5])
-#value generation
-lloyd.generateTraining()
-print "Ejemplo diapositiva 19:"
-print ">>>> Valores de los centros"
-print lloyd.getCenters()
-print ">>>> Test de valores"
-print "[6,2] pertenece a ",lloyd.clasify([6,2])
+if __name__ == "__main__":
+	'''Ejemplo diapositiva 19 '''
+	toleranceLimit = numpy.power(10,-10)
+	lloyd = VectorialCuantification(2,2,toleranceLimit)
+	lloyd.setGammaK(0.1)
+	#centers
+	lloyd.addInitialCenter([1,4],"Clase 1")
+	lloyd.addInitialCenter([7,2],"Clase 2")
+	#training vectors
+	lloyd.addTrainingVector([1,1])
+	lloyd.addTrainingVector([1,3])
+	lloyd.addTrainingVector([1,5])
+	lloyd.addTrainingVector([2,2])
+	lloyd.addTrainingVector([2,3])
+	lloyd.addTrainingVector([6,3])
+	lloyd.addTrainingVector([6,4])
+	lloyd.addTrainingVector([7,1])
+	lloyd.addTrainingVector([7,3])
+	lloyd.addTrainingVector([7,5])
+	#value generation
+	lloyd.generateTraining()
+	print "Ejemplo diapositiva 19:"
+	print ">>>> Valores de los centros"
+	print lloyd.getCenters()
+	print ">>>> Test de valores"
+	print "[6,2] pertenece a ",lloyd.clasify([6,2])
