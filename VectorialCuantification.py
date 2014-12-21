@@ -79,6 +79,7 @@ class VectorialCuantification():
 	def getCenters(self):
 
 		return self.centers
+		
 if __name__ == "__main__":
 	'''Ejemplo diapositiva 19 '''
 	toleranceLimit = numpy.power(10,-10)
