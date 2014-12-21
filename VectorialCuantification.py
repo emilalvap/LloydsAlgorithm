@@ -51,8 +51,10 @@ class VectorialCuantification():
 
 	def updateCenter(self,index,xVector):
 
-		tolerance = numpy.linalg.norm(numpy.subtract(self.centers[index],xVector))
+		aux = self.centers[index]
 		self.centers[index] = numpy.add(self.centers[index],(numpy.dot(self.gammaK,numpy.subtract(xVector,self.centers[index]))))
+		tolerance = numpy.linalg.norm(numpy.subtract(self.centers[index],aux))
+		
 		return tolerance
 
 	def clasify(self,xVector):
